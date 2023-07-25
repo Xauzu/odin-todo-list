@@ -4,7 +4,10 @@
   "description": "A todo list created using webpack.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "ghp": "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
   "author": "Xauzu",
