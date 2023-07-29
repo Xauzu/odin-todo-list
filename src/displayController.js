@@ -1,4 +1,4 @@
-import projectsManager from "./projectsManager";
+import todoItem from './todoItem'
 
 export default function displayController(display, projectText, todoContent) {
     this.display = display;
@@ -23,8 +23,13 @@ displayController.prototype.setup = function () {
         this.display.appendChild(this.todoContent);
     }
 }
-displayController.prototype.changeProjectName = function (title) { this.display.textContent = title; };
-displayController.prototype.changeProject = function (project) {
-    this.changeProjectName(project["name"]);
+displayController.prototype.changeProjectName = function (title) { this.projectText.textContent = title; };
+displayController.prototype.loadProject = function (project) {
+    this.changeProjectName(project['name']);
     // Todo: Other code here 
+    const data = project['data'];
+
+    data.forEach(item => {
+        this.todoContent.appendChild(item.createItemDisplay());
+    });
 };
