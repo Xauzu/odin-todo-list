@@ -13,10 +13,22 @@ body {
 .todoItem {
     display: flex;
     padding: 1rem;
-    gap: 4px;
+    gap: 1rem;
 }
 
 .itemImg {
     width: 1rem;
     height: 1rem;
+}
+
+.pLow {
+    color: gray;
+}
+
+.pMed {
+    color: orange;
+}
+
+.pHigh {
+    color: red;
 }

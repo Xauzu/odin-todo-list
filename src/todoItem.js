@@ -20,7 +20,7 @@ todoItem.prototype.setComplete = function (value) { return this.item[4] = value;
 
 // <done:checkBox> <title> - <description:huh> <dueDate> <edit btn:huh> <delete btn:huh>, <priority:color>
 //
-//  priority, 0 = white, 1 = yellow, 2 = red
+//  priority, 0 = gray, 1 = orange, 2 = red
 //
 //  * huh = hidden until hover
 todoItem.prototype.createItemDisplay = function () {
@@ -60,7 +60,7 @@ todoItem.prototype.createItemDisplay = function () {
 
     // Description, Hidden until hover
     const description = document.createElement('div');
-    description.textContent = '- ' + this.getDescription();
+    description.textContent = this.getDescription();
     description.classList.add('huh');
     displayItem.appendChild(description);
 
