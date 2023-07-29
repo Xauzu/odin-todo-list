@@ -53,9 +53,14 @@ todoItem.prototype.createItemDisplay = function () {
     }
     displayItem.classList.add(classText);
 
+    // Name
+    const name = document.createElement('div');
+    name.textContent = this.getName();
+    displayItem.appendChild(name);
+
     // Description, Hidden until hover
     const description = document.createElement('div');
-    description.textContent = this.getDescription();
+    description.textContent = '- ' + this.getDescription();
     description.classList.add('huh');
     displayItem.appendChild(description);
 
@@ -72,7 +77,7 @@ todoItem.prototype.createItemDisplay = function () {
     const editButton = document.createElement('button');
     let editImg = new Image();
     editImg.src = edit;
-    editButton.classList.add('itemImg');
+    editImg.classList.add('itemImg');
     editButton.appendChild(editImg);
     displayItem.appendChild(editButton);
 
@@ -80,7 +85,7 @@ todoItem.prototype.createItemDisplay = function () {
     const deleteButton = document.createElement('button');
     let deleteImg = new Image();
     deleteImg.src = del;
-    editButton.classList.add('itemImg');
+    deleteImg.classList.add('itemImg');
     deleteButton.appendChild(deleteImg);
     displayItem.appendChild(deleteButton);
 
