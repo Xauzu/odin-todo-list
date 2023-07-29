@@ -33,7 +33,7 @@ todoItem.prototype.createItemDisplay = function () {
     checkBox.setAttribute('type', 'checkBox');
     checkBox.checked = this.isComplete();
     checkBox.addEventListener('change', () => {
-        item.setComplete(checkBox.isComplete());
+        this.setComplete(checkBox.checked);
     });
     displayItem.appendChild(checkBox);
 
