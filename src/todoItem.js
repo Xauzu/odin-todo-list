@@ -61,7 +61,7 @@ todoItem.prototype.createItemDisplay = function () {
     // Description, Hidden until hover
     const description = document.createElement('div');
     description.textContent = this.getDescription();
-    description.classList.add('huh');
+    description.classList.add('hide');
     displayItem.appendChild(description);
 
     // Due Date
@@ -75,6 +75,7 @@ todoItem.prototype.createItemDisplay = function () {
 
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
+    editButton.classList.add('hide');
     let editImg = new Image();
     editImg.src = edit;
     editImg.classList.add('itemImg');
@@ -83,6 +84,7 @@ todoItem.prototype.createItemDisplay = function () {
 
     // Delete Button, Hidden until hover
     const deleteButton = document.createElement('button');
+    deleteButton.classList.add('hide');
     let deleteImg = new Image();
     deleteImg.src = del;
     deleteImg.classList.add('itemImg');

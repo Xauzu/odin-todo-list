@@ -33,15 +33,27 @@ body {
     color: red;
 }
 
+.hide {
+    display: none;
+}
+
+#project-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+#project-title,
+#project-text,
+#project-selection {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
 #content {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#project-text {
-    font-weight: bold;
-    font-size: xx-large;
-    padding: 1rem;
-    margin: 1rem;
 }

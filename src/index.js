@@ -12,6 +12,7 @@ const test = function () {
     dc.setup();
 
     const tdL = new todoList("test");
+    pm.addProject(tdL);
     console.log("TodoList Name: [" + tdL.getName() + "]");
 
     for (let i = 0; i < 10; i++) {
@@ -26,5 +27,10 @@ const test = function () {
 
     //Test
     dc.loadProject(tdL);
+
+    const tdL2 = new todoList("test 2");
+    pm.addProject(tdL2);
+
+    dc.loadProjectList(pm.getProjects());
 
 }();
