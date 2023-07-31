@@ -55,13 +55,12 @@ displayController.prototype.setup = function () {
 displayController.prototype.changeProjectName = function (title) { document.querySelector('#project-text').textContent = title; };
 displayController.prototype.loadProject = function (project) {
     this.changeProjectName(project['name']);
-    const data = project['data'];
+    const data = project.getData();
 
     // Clear and populate content
     this.todoContent.innerHTML = "";
-    data.forEach(item => {
-        this.todoContent.appendChild(item.createItemDisplay());
-    });
+    for (let i = 0; i < data.length; i++)
+        this.todoContent.appendChild(data[i].createItemDisplay(i));
 };
 displayController.prototype.loadProjectList = function (list) {
     const selection = document.querySelector('#project-selection');

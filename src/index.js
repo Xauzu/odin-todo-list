@@ -13,14 +13,13 @@ const test = function () {
 
     const tdL = new todoList("test");
     pm.addProject(tdL);
-    console.log("TodoList Name: [" + tdL.getName() + "]");
 
     for (let i = 0; i < 10; i++) {
         // name, description, priority, dueDate, complete
         const today = new Date();
 
-        //console.log("Adding: [" + format(new Date(today.getFullYear(), today.getMonth(), today.getDay(), i), "M/d/yy, h:mm aaaaa'm'") + "]");
-        console.log("Today is: ", (today.getMonth() + 1), "/", today.getDate(), "/", today.getFullYear());
+        // console.log("Adding: [" + format(new Date(today.getFullYear(), today.getMonth(), today.getDay(), i), "M/d/yy, h:mm aaaaa'm'") + "]");
+        // console.log("Today is: ", (today.getMonth() + 1), "/", today.getDate(), "/", today.getFullYear());
 
         let newItem = new todoItem("Item " + i,
             "Description " + i,

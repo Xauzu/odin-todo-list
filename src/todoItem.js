@@ -3,8 +3,8 @@ import del from './delete.png';
 import { compareAsc, parseISO, format } from 'date-fns';
 
 export default function todoItem(name, description, priority, dueDate, complete) {
-    // String String int(0->2) Date boolean
-    this.item = [name, description, priority, dueDate, complete];
+    // String String int(0->2) Date boolean delete?
+    this.item = [name, description, priority, dueDate, complete, 0];
 };
 
 todoItem.prototype.getItem = function () { return this.item; };
@@ -18,12 +18,11 @@ todoItem.prototype.setDescription = function (value) { return this.item[1] = val
 todoItem.prototype.setPriority = function (value) { return this.item[2] = value; };
 todoItem.prototype.setDueDate = function (value) { return this.item[3] = value; };
 todoItem.prototype.setComplete = function (value) { return this.item[4] = value; };
+todoItem.prototype.delete = function () { this.item[5] = 1; };
 
 // Calculates to decide what is displayed
 function calcTimeDisplay(dueDate) {
     const dateDiff = compareAsc(new Date(), dueDate);
-
-    console.log(new Date(), ' <-> ', dueDate);
 
     let displayDate;
     if (dateDiff === 1 || dateDiff === 0) {
@@ -48,7 +47,7 @@ function calcTimeDisplay(dueDate) {
 //  priority, 0 = gray, 1 = orange, 2 = red
 //
 //  * huh = hidden until hover
-todoItem.prototype.createItemDisplay = function () {
+todoItem.prototype.createItemDisplay = function (id) {
     // Parent Node
     const displayItem = document.createElement('div');
     displayItem.classList.add('todoItem');
@@ -129,6 +128,10 @@ todoItem.prototype.createItemDisplay = function () {
     deleteImg.classList.add('itemImg');
     deleteButton.appendChild(deleteImg);
     displayItem.appendChild(deleteButton);
+    deleteButton.addEventListener('click', (e) => {
+        e.target.parentNode.parentNode.classList.add('hide');
+        this.delete();
+    });
 
     displayItem.addEventListener('mouseenter', () => {
         description.classList.remove('hide-opacity2');
