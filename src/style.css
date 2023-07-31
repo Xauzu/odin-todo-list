@@ -84,7 +84,7 @@ body {
     display: none;
 }
 
-.hide-width {
+.hide-opacity {
     transition: opacity 0s;
     position: absolute;
     opacity: 0;

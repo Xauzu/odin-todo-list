@@ -1,5 +1,6 @@
 import edit from './edit.png';
 import del from './delete.png';
+import { compareAsc, parseISO, format } from 'date-fns';
 
 export default function todoItem(name, description, priority, dueDate, complete) {
     // String String int(0->2) Date boolean
@@ -18,6 +19,30 @@ todoItem.prototype.setPriority = function (value) { return this.item[2] = value;
 todoItem.prototype.setDueDate = function (value) { return this.item[3] = value; };
 todoItem.prototype.setComplete = function (value) { return this.item[4] = value; };
 
+// Calculates to decide what is displayed
+function calcTimeDisplay(dueDate) {
+    const dateDiff = compareAsc(new Date(), dueDate);
+
+    console.log(new Date(), ' <-> ', dueDate);
+
+    let displayDate;
+    if (dateDiff === 1 || dateDiff === 0) {
+        displayDate = 'Passed';
+    } else {
+        const currentDate = new Date();
+
+        if (dueDate.getFullYear() !== currentDate.getFullYear()) {
+            displayDate = format(dueDate, "M/d/yy");
+        }
+        else if (dueDate.getDay() !== currentDate.getDay()) {
+            displayDate = format(dueDate, "M/d")
+        }
+        else {
+            displayDate = format(dueDate, "h:mm aaaaa'm'");
+        }
+    }
+    return displayDate;
+}
 // <done:checkBox> <title> - <description:huh> <dueDate> <edit btn:huh> <delete btn:huh>, <priority:color>
 //
 //  priority, 0 = gray, 1 = orange, 2 = red
@@ -61,22 +86,35 @@ todoItem.prototype.createItemDisplay = function () {
     // Description, Hidden until hover
     const description = document.createElement('div');
     description.textContent = this.getDescription();
-    description.classList.add('hide-width');
+    description.classList.add('hide-opacity');
     displayItem.appendChild(description);
 
     // Due Date
-    const dueDate = document.createElement('input');
-    dueDate.setAttribute('type', 'datetime-local');
-    dueDate.value = this.getDueDate().slice(0, 16);
-    dueDate.addEventListener('change', (e) => {
-        this.setDueDate(dueDate.value);
-        console.log(dueDate.value);
-    });
-    displayItem.appendChild(dueDate);
+    if ('showPicker' in HTMLInputElement.prototype) {
+        // console.log(new Date().toISOString(), this.getDueDate(), "dateDiff: ", dateDiff);
+
+        const dueDate = document.createElement('div');
+        dueDate.title = format(this.getDueDate(), "M/d/yy, h:mm aaaaa'm'");
+
+        dueDate.textContent = calcTimeDisplay(this.getDueDate());
+        if (dueDate.textContent === 'Passed')
+            dueDate.setAttribute('color', 'red');
+
+        displayItem.appendChild(dueDate);
+    }
+    else {
+        const dueDate = document.createElement('input');
+        dueDate.setAttribute('type', 'datetime-local');
+        dueDate.value = this.getDueDate().toISOString().slice(0, 16);
+        dueDate.addEventListener('change', (e) => {
+            this.setDueDate(parseISO(dueDate.value + "Z"));
+        });
+        displayItem.appendChild(dueDate);
+    }
 
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
-    editButton.classList.add('todoButton', 'hide-width');
+    editButton.classList.add('todoButton', 'hide-opacity');
     let editImg = new Image();
     editImg.src = edit;
     editImg.classList.add('itemImg');
@@ -85,7 +123,7 @@ todoItem.prototype.createItemDisplay = function () {
 
     // Delete Button, Hidden until hover
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('todoButton', 'hide-width');
+    deleteButton.classList.add('todoButton', 'hide-opacity');
     let deleteImg = new Image();
     deleteImg.src = del;
     deleteImg.classList.add('itemImg');
@@ -93,14 +131,14 @@ todoItem.prototype.createItemDisplay = function () {
     displayItem.appendChild(deleteButton);
 
     displayItem.addEventListener('mouseenter', () => {
-        description.classList.remove('hide-width');
-        editButton.classList.remove('hide-width');
-        deleteButton.classList.remove('hide-width');
+        description.classList.remove('hide-opacity');
+        editButton.classList.remove('hide-opacity');
+        deleteButton.classList.remove('hide-opacity');
     });
     displayItem.addEventListener('mouseleave', () => {
-        description.classList.add('hide-width');
-        editButton.classList.add('hide-width');
-        deleteButton.classList.add('hide-width');
+        description.classList.add('hide-opacity');
+        editButton.classList.add('hide-opacity');
+        deleteButton.classList.add('hide-opacity');
     });
 
     return displayItem;

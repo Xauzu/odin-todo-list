@@ -17,10 +17,15 @@ const test = function () {
 
     for (let i = 0; i < 10; i++) {
         // name, description, priority, dueDate, complete
+        const today = new Date();
+
+        //console.log("Adding: [" + format(new Date(today.getFullYear(), today.getMonth(), today.getDay(), i), "M/d/yy, h:mm aaaaa'm'") + "]");
+        console.log("Today is: ", (today.getMonth() + 1), "/", today.getDate(), "/", today.getFullYear());
+
         let newItem = new todoItem("Item " + i,
             "Description " + i,
             i % 3,
-            new Date(2023, 7, 28, i).toISOString(),
+            new Date(today.getFullYear(), today.getMonth(), today.getDate(), i),
             Boolean(i % 2));
         tdL.appendItem(newItem);
     }
