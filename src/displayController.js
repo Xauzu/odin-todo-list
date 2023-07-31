@@ -20,7 +20,7 @@ displayController.prototype.setup = function () {
 
         let projectSelection = document.createElement('select');
         projectSelection.id = 'project-selection';
-        //projectSelection.classList.add('hide');
+        projectSelection.classList.add('hide');
         this.projectTitle.appendChild(projectSelection);
 
         this.projectTitle.addEventListener('mouseenter', () => {
@@ -49,7 +49,6 @@ displayController.prototype.setup = function () {
 displayController.prototype.changeProjectName = function (title) { document.querySelector('#project-text').textContent = title; };
 displayController.prototype.loadProject = function (project) {
     this.changeProjectName(project['name']);
-    // Todo: Other code here 
     const data = project['data'];
 
     data.forEach(item => {
