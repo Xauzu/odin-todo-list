@@ -64,6 +64,7 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+    margin-left: 5vw;
 }
 
 .todoItem>* {
@@ -73,6 +74,11 @@ body {
 .todoButton {
     border-radius: 4px;
     padding: 1px;
+    background-color: rgb(204, 204, 204);
+}
+
+.todoButton:active {
+    background-color: rgb(177, 177, 177);
 }
 
 .itemImg {
@@ -84,8 +90,17 @@ body {
     display: none;
 }
 
-.hide-opacity {
+.hide-opacity,
+.hide-opacity2 {
     transition: opacity 0s;
-    position: absolute;
     opacity: 0;
+}
+
+.hide-opacity2 {
+    position: absolute;
+}
+
+.description {
+    max-width: 50vw;
+    text-align: center;
 }

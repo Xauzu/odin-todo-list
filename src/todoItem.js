@@ -86,7 +86,7 @@ todoItem.prototype.createItemDisplay = function () {
     // Description, Hidden until hover
     const description = document.createElement('div');
     description.textContent = this.getDescription();
-    description.classList.add('hide-opacity');
+    description.classList.add('description', 'hide-opacity2');
     displayItem.appendChild(description);
 
     // Due Date
@@ -131,12 +131,12 @@ todoItem.prototype.createItemDisplay = function () {
     displayItem.appendChild(deleteButton);
 
     displayItem.addEventListener('mouseenter', () => {
-        description.classList.remove('hide-opacity');
+        description.classList.remove('hide-opacity2');
         editButton.classList.remove('hide-opacity');
         deleteButton.classList.remove('hide-opacity');
     });
     displayItem.addEventListener('mouseleave', () => {
-        description.classList.add('hide-opacity');
+        description.classList.add('hide-opacity2');
         editButton.classList.add('hide-opacity');
         deleteButton.classList.add('hide-opacity');
     });

@@ -30,8 +30,11 @@ const test = function () {
         tdL.appendItem(newItem);
     }
 
+    tdL['data'][2].setDescription('This is suppose to be a very long description mainly for testing to see how the text wraps');
+
     //Test
     dc.loadProject(tdL);
+
 
     const tdL2 = new todoList("test 2");
     pm.addProject(tdL2);
