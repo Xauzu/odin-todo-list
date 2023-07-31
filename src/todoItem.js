@@ -61,21 +61,22 @@ todoItem.prototype.createItemDisplay = function () {
     // Description, Hidden until hover
     const description = document.createElement('div');
     description.textContent = this.getDescription();
-    description.classList.add('hide');
+    description.classList.add('hide-width');
     displayItem.appendChild(description);
 
     // Due Date
     const dueDate = document.createElement('input');
     dueDate.setAttribute('type', 'datetime-local');
-    dueDate.value = this.getDueDate().toISOString().slice(0, 16);
+    dueDate.value = this.getDueDate().slice(0, 16);
     dueDate.addEventListener('change', (e) => {
         this.setDueDate(dueDate.value);
+        console.log(dueDate.value);
     });
     displayItem.appendChild(dueDate);
 
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
-    editButton.classList.add('hide');
+    editButton.classList.add('todoButton', 'hide-width');
     let editImg = new Image();
     editImg.src = edit;
     editImg.classList.add('itemImg');
@@ -84,12 +85,23 @@ todoItem.prototype.createItemDisplay = function () {
 
     // Delete Button, Hidden until hover
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('hide');
+    deleteButton.classList.add('todoButton', 'hide-width');
     let deleteImg = new Image();
     deleteImg.src = del;
     deleteImg.classList.add('itemImg');
     deleteButton.appendChild(deleteImg);
     displayItem.appendChild(deleteButton);
+
+    displayItem.addEventListener('mouseenter', () => {
+        description.classList.remove('hide-width');
+        editButton.classList.remove('hide-width');
+        deleteButton.classList.remove('hide-width');
+    });
+    displayItem.addEventListener('mouseleave', () => {
+        description.classList.add('hide-width');
+        editButton.classList.add('hide-width');
+        deleteButton.classList.add('hide-width');
+    });
 
     return displayItem;
 };

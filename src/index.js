@@ -20,7 +20,7 @@ const test = function () {
         let newItem = new todoItem("Item " + i,
             "Description " + i,
             i % 3,
-            new Date(2023, 7, 28, i),
+            new Date(2023, 7, 28, i).toISOString(),
             Boolean(i % 2));
         tdL.appendItem(newItem);
     }
@@ -34,3 +34,7 @@ const test = function () {
     dc.loadProjectList(pm.getProjects());
 
 }();
+
+const main = function () {
+
+};
