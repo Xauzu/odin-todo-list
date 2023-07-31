@@ -1,6 +1,8 @@
 import todoItem from './todoItem'
+import projectsManager from './projectsManager';
 
-export default function displayController(display, projectTitle, todoContent) {
+export default function displayController(projectsManager, display, projectTitle, todoContent) {
+    this.projectsManager = projectsManager;
     this.display = display;
     this.projectTitle = projectTitle;
     this.todoContent = todoContent;
@@ -21,6 +23,10 @@ displayController.prototype.setup = function () {
         let projectSelection = document.createElement('select');
         projectSelection.id = 'project-selection';
         projectSelection.classList.add('hide');
+        projectSelection.addEventListener('change', (e) => {
+            const index = e.target.selectedIndex;
+            this.loadProject(this.projectsManager.getProjects()[index]);
+        });
         this.projectTitle.appendChild(projectSelection);
 
         this.projectTitle.addEventListener('mouseenter', () => {
@@ -51,18 +57,20 @@ displayController.prototype.loadProject = function (project) {
     this.changeProjectName(project['name']);
     const data = project['data'];
 
+    // Clear and populate content
+    this.todoContent.innerHTML = "";
     data.forEach(item => {
         this.todoContent.appendChild(item.createItemDisplay());
     });
 };
 displayController.prototype.loadProjectList = function (list) {
     const selection = document.querySelector('#project-selection');
-    console.log(list);
+
+    // Clear and populate list
+    selection.innerHTML = "";
     for (let i = 0; i < list.length; i++) {
         const selectionItem = document.createElement('option');
-        selectionItem.setAttribute('data-id', i);
         selectionItem.textContent = list[i]['name'];
         selection.appendChild(selectionItem);
-        console.log("Appending: [" + selectionItem['name'] + "]");
     }
 };

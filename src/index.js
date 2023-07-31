@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 const test = function () {
     // Setup
     const pm = new projectsManager();
-    const dc = new displayController();
+    const dc = new displayController(pm);
     dc.setup();
 
     const tdL = new todoList("test");
