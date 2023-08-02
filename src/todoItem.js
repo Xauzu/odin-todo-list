@@ -168,14 +168,18 @@ todoItem.prototype.createItemDisplay = function (id) {
     });
 
     displayItem.addEventListener('mouseenter', () => {
-        if (description) description.classList.remove('hide-opacity2');
-        editButton.classList.remove('hide-opacity');
-        deleteButton.classList.remove('hide-opacity');
+        if (!document.querySelector('.actionForm')) {
+            if (description) description.classList.remove('hide-opacity2');
+            editButton.classList.remove('hide-opacity');
+            deleteButton.classList.remove('hide-opacity');
+        }
     });
     displayItem.addEventListener('mouseleave', () => {
-        if (description) description.classList.add('hide-opacity2');
-        editButton.classList.add('hide-opacity');
-        deleteButton.classList.add('hide-opacity');
+        if (!document.querySelector('.actionForm')) {
+            if (description) description.classList.add('hide-opacity2');
+            editButton.classList.add('hide-opacity');
+            deleteButton.classList.add('hide-opacity');
+        }
     });
 
     return displayItem;
@@ -183,7 +187,7 @@ todoItem.prototype.createItemDisplay = function (id) {
 
 export function todoItemForm(title, buttonName, formAction, data, cb) {
     const main = document.createElement('form');
-    main.classList.add('addForm');
+    main.classList.add('actionForm');
 
     const heading = document.createElement('div');
     heading.classList.add('formTitle');

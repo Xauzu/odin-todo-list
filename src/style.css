@@ -105,7 +105,7 @@ body {
     text-align: center;
 }
 
-.addForm {
+.actionForm {
     position: absolute;
     background-color: rgba(255, 255, 255, 0.95);
     border: 1px solid black;
@@ -116,10 +116,10 @@ body {
     gap: 1rem;
 }
 
-.addForm>input[type='text'],
-.addForm>input[type='number'],
-.addForm>input[type='checkBox'],
-.addForm>input[type='datetime-local'],
+.actionForm>input[type='text'],
+.actionForm>input[type='number'],
+.actionForm>input[type='checkBox'],
+.actionForm>input[type='datetime-local'],
 .formActionButtons {
     border: 1px solid gray;
     border-radius: 4px;
