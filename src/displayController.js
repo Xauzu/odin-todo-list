@@ -1,11 +1,12 @@
-import todoItem from './todoItem'
+import todoItem, { createAddDisplay } from './todoItem'
 import projectsManager from './projectsManager';
 
-export default function displayController(projectsManager, display, projectTitle, todoContent) {
+export default function displayController(projectsManager, display, projectTitle, todoContent, postContent) {
     this.projectsManager = projectsManager;
     this.display = display;
     this.projectTitle = projectTitle;
     this.todoContent = todoContent;
+    this.postContent = postContent;
     this.currentDisplay;
 };
 
@@ -52,10 +53,18 @@ displayController.prototype.setup = function () {
         this.todoContent.id = 'todo-content';
         this.display.appendChild(this.todoContent);
     }
+
+    this.postContent = document.querySelector('#postcontent');
+    if (!this.postContent) {
+        this.postContent = document.createElement('div');
+        this.postContent.id = 'postcontent';
+        this.display.appendChild(this.postContent);
+    }
 }
 displayController.prototype.changeProjectName = function (title) { document.querySelector('#project-text').textContent = title; };
 displayController.prototype.clearContent = function () {
     this.todoContent.innerHTML = "";
+    this.postContent.innerHTML = "";
 }
 displayController.prototype.loadProject = function (project) {
     this.changeProjectName(project['name']);
@@ -66,6 +75,10 @@ displayController.prototype.loadProject = function (project) {
     this.clearContent();
     for (let i = 0; i < data.length; i++)
         this.todoContent.appendChild(data[i].createItemDisplay(i));
+    this.postContent.appendChild(createAddDisplay((inputData) => {
+        project.appendTodoItem(inputData);
+        this.todoContent.appendChild(project.getLastItem().createItemDisplay(data.length - 1));
+    }));
 };
 displayController.prototype.loadContent = function (content) {
     // Populate content

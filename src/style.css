@@ -49,7 +49,8 @@ body {
 }
 
 #content,
-#todo-content {
+#todo-content,
+#postcontent {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,7 +72,8 @@ body {
     transition: opacity 2s;
 }
 
-.todoButton {
+.todoButton,
+.addButton {
     border-radius: 4px;
     padding: 1px;
     background-color: rgb(204, 204, 204);
@@ -132,4 +134,13 @@ body {
     gap: 1rem;
     align-items: center;
     justify-content: center;
+}
+
+.addButton {
+    padding: 0.5rem 2rem;
+    transition: opacity 0.5s;
+}
+
+.addForm {
+    top: 10vw;
 }

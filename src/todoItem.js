@@ -151,7 +151,7 @@ todoItem.prototype.createItemDisplay = function (id) {
             displayItem.classList.add(calcPrio(this.item[2]));
 
         }, this.item);
-        e.target.parentNode.parentNode.appendChild(editItem);
+        e.target.parentNode.parentNode.parentNode.appendChild(editItem);
     });
 
     // Delete Button, Hidden until hover
@@ -175,14 +175,41 @@ todoItem.prototype.createItemDisplay = function (id) {
         }
     });
     displayItem.addEventListener('mouseleave', () => {
-        if (!document.querySelector('.actionForm')) {
-            if (description) description.classList.add('hide-opacity2');
-            editButton.classList.add('hide-opacity');
-            deleteButton.classList.add('hide-opacity');
-        }
+        if (description) description.classList.add('hide-opacity2');
+        editButton.classList.add('hide-opacity');
+        deleteButton.classList.add('hide-opacity');
     });
 
     return displayItem;
+};
+
+export function createAddDisplay(cb) {
+    const row = document.createElement('div');
+    row.classList.add('todoItem');
+    row.style = 'margin-left: 0;'
+
+    const addButton = document.createElement('button');
+    addButton.classList.add('addButton', 'todoButton', 'hide-opacity');
+    addButton.textContent = '+';
+    addButton.addEventListener('click', (e) => {
+        const addItemForm = todoItemForm('Add item', 'Add', (...data) => {
+            cb(data);
+        });
+        addItemForm.classList.add('addForm');
+        e.target.parentNode.parentNode.appendChild(addItemForm);
+    });
+    row.appendChild(addButton);
+
+    row.addEventListener('mouseenter', () => {
+        if (!document.querySelector('.actionForm')) {
+            addButton.classList.remove('hide-opacity');
+        }
+    });
+    row.addEventListener('mouseleave', () => {
+        addButton.classList.add('hide-opacity');
+    });
+
+    return row;
 };
 
 export function todoItemForm(title, buttonName, formAction, data, cb) {
