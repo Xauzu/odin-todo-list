@@ -6,6 +6,7 @@ export default function displayController(projectsManager, display, projectTitle
     this.display = display;
     this.projectTitle = projectTitle;
     this.todoContent = todoContent;
+    this.currentDisplay;
 };
 
 displayController.prototype.setup = function () {
@@ -53,14 +54,22 @@ displayController.prototype.setup = function () {
     }
 }
 displayController.prototype.changeProjectName = function (title) { document.querySelector('#project-text').textContent = title; };
+displayController.prototype.clearContent = function () {
+    this.todoContent.innerHTML = "";
+}
 displayController.prototype.loadProject = function (project) {
     this.changeProjectName(project['name']);
+    this.currentDisplay = project;
     const data = project.getData();
 
     // Clear and populate content
-    this.todoContent.innerHTML = "";
+    this.clearContent();
     for (let i = 0; i < data.length; i++)
         this.todoContent.appendChild(data[i].createItemDisplay(i));
+};
+displayController.prototype.loadContent = function (content) {
+    // Populate content
+    this.todoContent.appendChild(content);
 };
 displayController.prototype.loadProjectList = function (list) {
     const selection = document.querySelector('#project-selection');

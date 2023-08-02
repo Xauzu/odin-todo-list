@@ -2,15 +2,15 @@ import './style.css'
 import displayController from './displayController'
 import projectsManager from './projectsManager'
 import todoList from './todoList';
-import todoItem from './todoItem';
+import todoItem, { todoItemForm } from './todoItem';
 import { format } from 'date-fns';
 
-const test = function () {
-    // Setup
-    const pm = new projectsManager();
-    const dc = new displayController(pm);
-    dc.setup();
+// Setup
+const pm = new projectsManager();
+const dc = new displayController(pm);
+dc.setup();
 
+const test = function () {
     const tdL = new todoList("test");
     pm.addProject(tdL);
 
@@ -40,6 +40,8 @@ const test = function () {
 
     dc.loadProjectList(pm.getProjects());
 
+    // Test form
+    // dc.loadContent(todoItemForm('Adding a new item', 'Add'));
 }();
 
 const main = function () {
