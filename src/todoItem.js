@@ -43,6 +43,7 @@ function calcTimeDisplay(dueDate) {
     return displayDate;
 }
 
+// Calculates the class string for css styling
 function calcPrio(prio) {
     let classText;
     switch (+prio) {
@@ -264,14 +265,4 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     actionButtons.appendChild(cancelButton);
 
     return main;
-};
-
-todoItem.prototype.editItem = function (data, input) {
-    // String String int(0->2) Date boolean delete?
-    // data = [name || data[0],
-    // description || data[1],
-    // priority || data[2],
-    // dueDate || data[3],
-    // complete || data[4],
-    // data[5]];
 };
