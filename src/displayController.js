@@ -158,9 +158,11 @@ displayController.prototype.loadProject = function (project, index) {
             this.projectsManager.saveToLocalStorage();
         }));
     }
-    this.postContent.appendChild(createAddDisplay((inputData) => {
-        project.appendTodoItem(inputData);
-        this.todoContent.appendChild(project.getLastItem().createItemDisplay(data.length - 1));
+    this.postContent.appendChild(createAddDisplay((...inputData) => {
+        project.appendTodoItem(...inputData);
+        this.todoContent.appendChild(project.getLastItem().createItemDisplay(data.length - 1, () => {
+            this.projectsManager.saveToLocalStorage();
+        }));
     }));
 };
 displayController.prototype.loadContent = function (content) {

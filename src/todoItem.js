@@ -191,8 +191,8 @@ export function createAddDisplay(cb) {
     addButton.textContent = '+';
     addButton.addEventListener('click', (e) => {
         if (!document.querySelector('.action-form')) {
-            const addItemForm = todoItemForm('Add item', 'Add', (...data) => {
-                cb(data);
+            const addItemForm = todoItemForm('Add item', 'Add', (newName, newDesc, newPrio, newdueDate, newComplete) => {
+                cb(newName, newDesc, newPrio, newdueDate, newComplete);
             });
             addItemForm.classList.add('add-form');
             e.target.parentNode.parentNode.appendChild(addItemForm);
