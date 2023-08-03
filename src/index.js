@@ -2,6 +2,8 @@ import './style.css'
 import displayController from './displayController'
 import projectsManager from './projectsManager'
 import todoList from './todoList';
+import todoItem from './todoItem';
+import { parseISO } from 'date-fns';
 
 // Setup
 const pm = new projectsManager();
@@ -38,13 +40,21 @@ const testFunc = function () {
 
     dc.loadProjectList(pm.getProjects());
 
+    const button = document.createElement('button');
+    button.textContent = "Test";
+    const content = document.querySelector('#postcontent');
+    content.append(button);
+
+    // button.addEventListener('click', (e) => {
+    //     dc.clearContent();
+    //     loadFromLocalStorage();
+    // });
+
     // Test form
     // dc.loadContent(todoItemForm('Adding a new item', 'Add'));
 };
 
-const main = function () {
 
-};
 
 function newProject(name) {
     const proj = new todoList(name);
@@ -58,5 +68,3 @@ const test = 0;
 
 if (test)
     testFunc();
-else
-    main();

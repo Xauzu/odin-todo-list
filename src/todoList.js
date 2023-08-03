@@ -9,7 +9,7 @@ todoList.prototype.getData = function () { this.clean(); return this.data; };
 todoList.prototype.getLastItem = function () { return this.data[this.data.length - 1]; };
 todoList.prototype.getName = function () { return this.name; };
 todoList.prototype.appendItem = function (item) { this.data.push(item); };
-todoList.prototype.appendTodoItem = function (item) { this.data.push(new todoItem(...item)); };
+todoList.prototype.appendTodoItem = function (name, description, priority, dueDate, complete) { this.data.push(new todoItem(name, description, priority, dueDate, complete)); };
 todoList.prototype.removeItemAt = function (index) { this.data.splice(index, 1); };
 todoList.prototype.setName = function (name) { this.name = name; };
 todoList.prototype.clean = function () {
@@ -51,9 +51,9 @@ export function todoListForm(title, buttonName, formAction, data, cb) {
     leftActionButton.addEventListener('click', (e) => {
         e.preventDefault();
         if (name.value.length > 0) {
+            e.target.parentNode.parentNode.remove();
             const values = [name.value];
             formAction(...values);
-            e.target.parentNode.parentNode.remove();
             if (cb) cb();
         }
         else alert('Empty name field');

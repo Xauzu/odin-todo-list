@@ -50,6 +50,7 @@ displayController.prototype.setup = function () {
             if (this.projectsManager.getProjects().length > 0 && !document.querySelector('.action-form')) {
                 const addProjectForm = todoListForm('Edit List', 'Confirm', (name) => {
                     this.projectsManager.getProjectAt(this.currentIndex).setName(name);
+                    this.projectsManager.saveToLocalStorage();
                     this.reloadList();
                 }, [this.projectsManager.getProjectAt(this.currentIndex)['name']]);
                 e.target.parentNode.parentNode.parentNode.appendChild(addProjectForm);
@@ -68,6 +69,8 @@ displayController.prototype.setup = function () {
         delProjectButton.addEventListener('click', () => {
             if (this.projectsManager && this.currentIndex !== undefined) {
                 this.projectsManager.removeProjectAt(this.currentIndex);
+                this.projectsManager.saveToLocalStorage();
+
                 this.reloadList();
                 this.clearContent();
 
@@ -89,12 +92,12 @@ displayController.prototype.setup = function () {
             if (!document.querySelector('.action-form')) {
                 const addItemForm = todoListForm('Add Todo List', 'Add', (name) => {
                     this.projectsManager.addProject(new todoList(name));
+                    this.projectsManager.saveToLocalStorage();
                     const index = this.projectsManager.getLength() - 1;
-                    this.loadProject(this.projectsManager.getProjectAt(index), index);
                     // Reload selection list and select last one
                     this.reloadList();
-                    this.changeProjectName(name);
                     projectSelection.selectedIndex = projectSelection.length - 1;
+                    this.loadProject(this.projectsManager.getProjectAt(index), index);
 
                 });
                 addItemForm.classList.add('add-form');
@@ -134,6 +137,9 @@ displayController.prototype.setup = function () {
         this.postContent.id = 'postcontent';
         this.display.appendChild(this.postContent);
     }
+
+    this.projectsManager.loadFromLocalStorage();
+    this.loadProjectList(this.projectsManager.getProjects());
 }
 displayController.prototype.changeProjectName = function (title) { document.querySelector('#project-text').textContent = title; };
 displayController.prototype.clearContent = function () {
@@ -161,7 +167,9 @@ displayController.prototype.loadContent = function (content) {
 displayController.prototype.loadProjectList = function (list) {
     const selection = document.querySelector('#project-selection');
 
-    if (list.length > 0) this.changeProjectName(list[0]['name']);
+    if (list.length > 0) {
+        this.loadProject(list[0]);
+    }
 
     // Clear and populate list
     selection.innerHTML = "";

@@ -283,6 +283,7 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
             const values = [name.value, description.value, priority.value, parseISO(dueDate.value), checkBox.checked];
             formAction(...values);
             e.target.parentNode.parentNode.remove();
+            if (cb) cb();
         }
         else {
             const alertString = 'Empty required value(s): ' + (name.value.length === 0 ? '\n- Name' : '') + (description.value.length === 0 ? '\n- Description' : '');
