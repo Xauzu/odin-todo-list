@@ -87,7 +87,7 @@ displayController.prototype.setup = function () {
 
         addProjectButton.addEventListener('click', (e) => {
             if (!document.querySelector('.action-form')) {
-                const addItemForm = todoListForm('Add item', 'Add', (name) => {
+                const addItemForm = todoListForm('Add Todo List', 'Add', (name) => {
                     this.projectsManager.addProject(new todoList(name));
                     const index = this.projectsManager.getLength() - 1;
                     this.loadProject(this.projectsManager.getProjectAt(index), index);

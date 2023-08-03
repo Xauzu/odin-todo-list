@@ -2,8 +2,6 @@ import './style.css'
 import displayController from './displayController'
 import projectsManager from './projectsManager'
 import todoList from './todoList';
-import todoItem, { todoItemForm } from './todoItem';
-import { format } from 'date-fns';
 
 // Setup
 const pm = new projectsManager();
