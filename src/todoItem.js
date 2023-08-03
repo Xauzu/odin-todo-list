@@ -228,8 +228,9 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     name.placeholder = 'name';
     main.appendChild(name);
 
-    const description = document.createElement('input');
-    description.setAttribute('type', 'text');
+    const description = document.createElement('textarea');
+    description.setAttribute('rows', '8');
+    description.setAttribute('cols', '30');
     description.classList.add('formInput');
     description.placeholder = 'description';
     main.appendChild(description);

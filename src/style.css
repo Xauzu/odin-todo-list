@@ -122,6 +122,7 @@ body {
 .actionForm>input[type='number'],
 .actionForm>input[type='checkBox'],
 .actionForm>input[type='datetime-local'],
+.actionForm>textarea,
 .formActionButtons {
     border: 1px solid gray;
     border-radius: 4px;
