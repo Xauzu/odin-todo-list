@@ -48,14 +48,14 @@ function calcPrio(prio) {
     let classText;
     switch (+prio) {
         case 1:
-            classText = "pMed";
+            classText = "p-med";
             break;
         case 2:
-            classText = "pHigh";
+            classText = "p-high";
             break;
         case 0:
         default:
-            classText = "pLow";
+            classText = "p-low";
     }
     return classText;
 }
@@ -67,7 +67,7 @@ function calcPrio(prio) {
 todoItem.prototype.createItemDisplay = function (id) {
     // Parent Node
     const displayItem = document.createElement('div');
-    displayItem.classList.add('todoItem');
+    displayItem.classList.add('todo-item');
     displayItem.id = 'todo-item-' + id;
 
     // Checkbox
@@ -107,10 +107,10 @@ todoItem.prototype.createItemDisplay = function (id) {
 
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
-    editButton.classList.add('todoButton', 'hide-opacity');
+    editButton.classList.add('todo-button', 'hide-opacity');
     const editImg = new Image();
     editImg.src = edit;
-    editImg.classList.add('itemImg');
+    editImg.classList.add('item-img');
     editButton.appendChild(editImg);
     displayItem.appendChild(editButton);
     editButton.addEventListener('click', (e) => {
@@ -134,7 +134,7 @@ todoItem.prototype.createItemDisplay = function (id) {
 
             checkBox.checked = this.isComplete();
 
-            displayItem.classList.remove('pLow', 'pMed', 'pHigh');
+            displayItem.classList.remove('p-low', 'p-med', 'p-high');
             displayItem.classList.add(calcPrio(this.item[2]));
 
         }, this.item);
@@ -143,10 +143,10 @@ todoItem.prototype.createItemDisplay = function (id) {
 
     // Delete Button, Hidden until hover
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('todoButton', 'hide-opacity');
+    deleteButton.classList.add('todo-button', 'hide-opacity');
     const deleteImg = new Image();
     deleteImg.src = del;
-    deleteImg.classList.add('itemImg');
+    deleteImg.classList.add('item-img');
     deleteButton.appendChild(deleteImg);
     displayItem.appendChild(deleteButton);
     deleteButton.addEventListener('click', (e) => {
@@ -155,7 +155,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     });
 
     displayItem.addEventListener('mouseenter', () => {
-        if (!document.querySelector('.actionForm')) {
+        if (!document.querySelector('.action-form')) {
             if (description) description.classList.remove('hide-opacity2');
             editButton.classList.remove('hide-opacity');
             deleteButton.classList.remove('hide-opacity');
@@ -172,23 +172,23 @@ todoItem.prototype.createItemDisplay = function (id) {
 
 export function createAddDisplay(cb) {
     const row = document.createElement('div');
-    row.classList.add('todoItem');
+    row.classList.add('todo-item');
     row.style = 'margin-left: 0;'
 
     const addButton = document.createElement('button');
-    addButton.classList.add('addButton', 'todoButton', 'hide-opacity');
+    addButton.classList.add('add-button', 'todo-button', 'hide-opacity');
     addButton.textContent = '+';
     addButton.addEventListener('click', (e) => {
         const addItemForm = todoItemForm('Add item', 'Add', (...data) => {
             cb(data);
         });
-        addItemForm.classList.add('addForm');
+        addItemForm.classList.add('add-form');
         e.target.parentNode.parentNode.appendChild(addItemForm);
     });
     row.appendChild(addButton);
 
     row.addEventListener('mouseenter', () => {
-        if (!document.querySelector('.actionForm')) {
+        if (!document.querySelector('.action-form')) {
             addButton.classList.remove('hide-opacity');
         }
     });
@@ -201,24 +201,24 @@ export function createAddDisplay(cb) {
 
 export function todoItemForm(title, buttonName, formAction, data, cb) {
     const main = document.createElement('form');
-    main.classList.add('actionForm');
+    main.classList.add('action-form');
 
     const heading = document.createElement('div');
-    heading.classList.add('formTitle');
+    heading.classList.add('form-title');
     heading.textContent = title;
     main.appendChild(heading);
 
     //this.item = [name, description, priority, dueDate, complete, 0];
     const name = document.createElement('input');
     name.setAttribute('type', 'text');
-    name.classList.add('formInput');
+    name.classList.add('form-input');
     name.placeholder = 'name';
     main.appendChild(name);
 
     const description = document.createElement('textarea');
     description.setAttribute('rows', '8');
     description.setAttribute('cols', '30');
-    description.classList.add('formInput');
+    description.classList.add('form-input');
     description.placeholder = 'description';
     main.appendChild(description);
 
@@ -227,7 +227,7 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     priority.setAttribute('min', 0);
     priority.setAttribute('max', 2);
     priority.defaultValue = 0;
-    priority.classList.add('formInput');
+    priority.classList.add('form-input');
     main.appendChild(priority);
 
     const dueDate = document.createElement('input');
@@ -236,7 +236,7 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     main.appendChild(dueDate);
 
     const checkBoxDiv = document.createElement('div');
-    checkBoxDiv.classList.add('checkBoxDiv');
+    checkBoxDiv.classList.add('check-box-div');
     main.appendChild(checkBoxDiv);
 
     const checkBoxLabel = document.createElement('label');
@@ -259,11 +259,11 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     }
 
     const actionButtons = document.createElement('div');
-    actionButtons.classList.add('formActionButtonsDiv');
+    actionButtons.classList.add('form-action-buttons-div');
     main.appendChild(actionButtons);
 
     const leftActionButton = document.createElement('button');
-    leftActionButton.classList.add('formActionButtons');
+    leftActionButton.classList.add('form-action-buttons');
     leftActionButton.textContent = buttonName;
     leftActionButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -275,7 +275,7 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     actionButtons.appendChild(leftActionButton);
 
     const cancelButton = document.createElement('button');
-    cancelButton.classList.add('formActionButtons');
+    cancelButton.classList.add('form-action-buttons');
     cancelButton.textContent = 'Cancel';
     cancelButton.addEventListener('click', (e) => {
         e.preventDefault();

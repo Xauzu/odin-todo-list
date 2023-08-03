@@ -31,6 +31,9 @@ displayController.prototype.setup = function () {
         });
         this.projectTitle.appendChild(projectSelection);
 
+        const addProjectButton = document.createElement('select');
+        addProjectButton.id = 'add'
+
         this.projectTitle.addEventListener('mouseenter', () => {
             const text = document.querySelector('#project-text');
             text.classList.add('hide');
