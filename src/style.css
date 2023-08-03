@@ -29,6 +29,7 @@ body {
     justify-content: center;
     padding: 1rem;
     margin: 1rem;
+    gap: 1rem;
 }
 
 #project-title,
@@ -73,14 +74,18 @@ body {
 }
 
 .todo-button,
-.add-button {
+.add-button,
+.project-button,
+.form-action-buttons {
     border-radius: 4px;
     padding: 1px;
-    background-color: rgb(204, 204, 204);
+    background-color: rgb(223, 223, 223);
 }
 
-.todo-button:active {
-    background-color: rgb(177, 177, 177);
+.todo-button:active,
+.project-button:active,
+.form-action-buttons:active {
+    background-color: rgb(206, 206, 206);
 }
 
 .item-img {
@@ -144,4 +149,22 @@ body {
 
 .add-form {
     top: 10vw;
+}
+
+#add-project-button {
+    padding: 1rem;
+    border-radius: 16px;
+}
+
+#edit-project-button,
+#del-project-button {
+    padding: 0.5rem;
+    border-radius: 16px;
+}
+
+#project-buttons-div {
+    display: flex;
+    gap: 1rem;
+    position: absolute;
+    right: 1rem;
 }

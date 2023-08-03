@@ -19,3 +19,50 @@ todoList.prototype.clean = function () {
     }
     return this.data;
 }
+
+export function todoListForm(title, buttonName, formAction, data, cb) {
+    const main = document.createElement('form');
+    main.classList.add('action-form');
+
+    const heading = document.createElement('div');
+    heading.classList.add('form-title');
+    heading.textContent = title;
+    main.appendChild(heading);
+
+    const name = document.createElement('input');
+    name.setAttribute('type', 'text');
+    name.classList.add('form-input');
+    name.placeholder = 'name';
+    main.appendChild(name);
+
+    // Append data to fields if data is given to the function
+    if (data) {
+        name.value = data[0];
+    }
+
+    const actionButtons = document.createElement('div');
+    actionButtons.classList.add('form-action-buttons-div');
+    main.appendChild(actionButtons);
+
+    const leftActionButton = document.createElement('button');
+    leftActionButton.classList.add('form-action-buttons');
+    leftActionButton.textContent = buttonName;
+    leftActionButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const values = [name.value];
+        formAction(...values);
+        e.target.parentNode.parentNode.remove();
+    });
+    actionButtons.appendChild(leftActionButton);
+
+    const cancelButton = document.createElement('button');
+    cancelButton.classList.add('form-action-buttons');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.target.parentNode.parentNode.remove();
+    });
+    actionButtons.appendChild(cancelButton);
+
+    return main;
+};

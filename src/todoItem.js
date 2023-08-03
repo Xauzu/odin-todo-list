@@ -109,6 +109,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     const editButton = document.createElement('button');
     editButton.classList.add('todo-button', 'hide-opacity');
     const editImg = new Image();
+    editImg.draggable = false;
     editImg.src = edit;
     editImg.classList.add('item-img');
     editButton.appendChild(editImg);
@@ -145,6 +146,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('todo-button', 'hide-opacity');
     const deleteImg = new Image();
+    deleteImg.draggable = false;
     deleteImg.src = del;
     deleteImg.classList.add('item-img');
     deleteButton.appendChild(deleteImg);
@@ -241,7 +243,7 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
 
     const checkBoxLabel = document.createElement('label');
     checkBoxLabel.for = 'checkBox';
-    checkBoxLabel.textContent = 'Done: '
+    checkBoxLabel.textContent = 'Done: ';
     checkBoxDiv.appendChild(checkBoxLabel);
 
     const checkBox = document.createElement('input');
@@ -267,10 +269,9 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     leftActionButton.textContent = buttonName;
     leftActionButton.addEventListener('click', (e) => {
         e.preventDefault();
-        const values = [name.value, description.value, priority.value, parseISO(dueDate.value + 'Z'), checkBox.checked]
+        const values = [name.value, description.value, priority.value, parseISO(dueDate.value + 'Z'), checkBox.checked];
         formAction(...values);
         e.target.parentNode.parentNode.remove();
-        //cb();
     });
     actionButtons.appendChild(leftActionButton);
 
