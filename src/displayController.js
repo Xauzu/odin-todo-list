@@ -18,11 +18,11 @@ displayController.prototype.setup = function () {
         this.projectTitle = document.createElement('div');
         this.projectTitle.id = 'project-title';
 
-        let projectText = document.createElement('div');
+        const projectText = document.createElement('div');
         projectText.id = 'project-text';
         this.projectTitle.appendChild(projectText);
 
-        let projectSelection = document.createElement('select');
+        const projectSelection = document.createElement('select');
         projectSelection.id = 'project-selection';
         projectSelection.classList.add('hide');
         projectSelection.addEventListener('change', (e) => {

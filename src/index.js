@@ -10,7 +10,7 @@ const pm = new projectsManager();
 const dc = new displayController(pm);
 dc.setup();
 
-const test = function () {
+const testFunc = function () {
     const tdL = new todoList("test");
     pm.addProject(tdL);
 
@@ -42,8 +42,23 @@ const test = function () {
 
     // Test form
     // dc.loadContent(todoItemForm('Adding a new item', 'Add'));
-}();
+};
 
 const main = function () {
 
 };
+
+function newProject(name) {
+    const proj = new todoList(name);
+    pm.addProject(proj);
+
+    // Reload project list after adding new project
+    dc.loadProjectList(pm.getProjects());
+}
+
+const test = 1;
+
+if (test)
+    testFunc();
+else
+    main();

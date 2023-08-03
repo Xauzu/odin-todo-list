@@ -108,7 +108,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
     editButton.classList.add('todoButton', 'hide-opacity');
-    let editImg = new Image();
+    const editImg = new Image();
     editImg.src = edit;
     editImg.classList.add('itemImg');
     editButton.appendChild(editImg);
@@ -144,7 +144,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     // Delete Button, Hidden until hover
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('todoButton', 'hide-opacity');
-    let deleteImg = new Image();
+    const deleteImg = new Image();
     deleteImg.src = del;
     deleteImg.classList.add('itemImg');
     deleteButton.appendChild(deleteImg);
