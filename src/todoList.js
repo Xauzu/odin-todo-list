@@ -11,6 +11,7 @@ todoList.prototype.getName = function () { return this.name; };
 todoList.prototype.appendItem = function (item) { this.data.push(item); };
 todoList.prototype.appendTodoItem = function (item) { this.data.push(new todoItem(...item)); };
 todoList.prototype.removeItemAt = function (index) { this.data.splice(index, 1); };
+todoList.prototype.setName = function (name) { this.name = name; };
 todoList.prototype.clean = function () {
     for (let i = this.data.length - 1; i >= 0; i--) {
         if (this.data[i].item[5] === 1) {
@@ -52,6 +53,7 @@ export function todoListForm(title, buttonName, formAction, data, cb) {
         const values = [name.value];
         formAction(...values);
         e.target.parentNode.parentNode.remove();
+        if (cb) cb();
     });
     actionButtons.appendChild(leftActionButton);
 

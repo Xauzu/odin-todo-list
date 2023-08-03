@@ -1,4 +1,5 @@
 import todoItem, { createAddDisplay } from './todoItem'
+import todoList, { todoListForm } from './todoList'
 import projectsManager from './projectsManager';
 import edit from './edit.png';
 import del from './delete.png';
@@ -45,6 +46,15 @@ displayController.prototype.setup = function () {
         editImg.src = edit;
         editImg.classList.add('item-img');
         editProjectButton.appendChild(editImg);
+        editProjectButton.addEventListener('click', (e) => {
+            if (this.projectsManager.getProjects().length > 0) {
+                const addProjectForm = todoListForm('Edit List', 'Confirm', (name) => {
+                    this.projectsManager.getProjectAt(this.currentIndex).setName(name);
+                    this.reloadList();
+                }, [this.projectsManager.getProjectAt(this.currentIndex)['name']]);
+                e.target.parentNode.parentNode.parentNode.appendChild(addProjectForm);
+            }
+        });
         projectButtonsDiv.appendChild(editProjectButton);
 
         const delProjectButton = document.createElement('button');
@@ -58,10 +68,12 @@ displayController.prototype.setup = function () {
         delProjectButton.addEventListener('click', () => {
             if (this.projectsManager && this.currentIndex !== undefined) {
                 this.projectsManager.removeProjectAt(this.currentIndex);
-                this.loadProjectList(this.projectsManager.getProjects());
+                this.reloadList();
                 this.clearContent();
 
-                if (this.projectsManager.getProjects().length > 0) this.loadProject(this.projectsManager.getProjectAt(0));
+                if (this.projectsManager.getProjects().length > 0) {
+                    this.loadProject(this.projectsManager.getProjectAt(0), 0);
+                }
                 else this.changeProjectName('<empty>');
             }
         });
@@ -72,6 +84,21 @@ displayController.prototype.setup = function () {
         addProjectButton.id = 'add-project-button';
         addProjectButton.classList.add('project-button');
         addProjectButton.textContent = '+';
+
+        addProjectButton.addEventListener('click', (e) => {
+            const addItemForm = todoListForm('Add item', 'Add', (name) => {
+                this.projectsManager.addProject(new todoList(name));
+                const index = this.projectsManager.getLength() - 1;
+                this.loadProject(this.projectsManager.getProjectAt(index), index);
+                // Reload selection list and select last one
+                this.reloadList();
+                this.changeProjectName(name);
+                projectSelection.selectedIndex = projectSelection.length - 1;
+
+            });
+            addItemForm.classList.add('add-form');
+            e.target.parentNode.parentNode.parentNode.appendChild(addItemForm);
+        });
         projectButtonsDiv.appendChild(addProjectButton);
 
         this.projectTitle.appendChild(projectButtonsDiv);
@@ -113,8 +140,7 @@ displayController.prototype.clearContent = function () {
 }
 displayController.prototype.loadProject = function (project, index) {
     this.changeProjectName(project['name']);
-    if (index) this.currentIndex = index;
-    console.log(this.currentIndex);
+    if (index !== undefined) this.currentIndex = index;
     const data = project.getData();
 
     // Clear and populate content
@@ -133,6 +159,8 @@ displayController.prototype.loadContent = function (content) {
 displayController.prototype.loadProjectList = function (list) {
     const selection = document.querySelector('#project-selection');
 
+    if (list.length > 0) this.changeProjectName(list[0]['name']);
+
     // Clear and populate list
     selection.innerHTML = "";
     for (let i = 0; i < list.length; i++) {
@@ -141,3 +169,6 @@ displayController.prototype.loadProjectList = function (list) {
         selection.appendChild(selectionItem);
     }
 };
+displayController.prototype.reloadList = function () {
+    if (projectsManager) this.loadProjectList(this.projectsManager.getProjects());
+}
