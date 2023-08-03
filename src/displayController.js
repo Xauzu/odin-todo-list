@@ -9,7 +9,7 @@ export default function displayController(projectsManager, display, projectTitle
     this.projectTitle = projectTitle;
     this.todoContent = todoContent;
     this.postContent = postContent;
-    this.currentDisplay;
+    this.currentIndex = 0;
 };
 
 displayController.prototype.setup = function () {
@@ -22,6 +22,7 @@ displayController.prototype.setup = function () {
 
         const projectText = document.createElement('div');
         projectText.id = 'project-text';
+        projectText.textContent = '<empty>';
         this.projectTitle.appendChild(projectText);
 
         const projectSelection = document.createElement('select');
@@ -29,7 +30,7 @@ displayController.prototype.setup = function () {
         projectSelection.classList.add('hide');
         projectSelection.addEventListener('change', (e) => {
             const index = e.target.selectedIndex;
-            this.loadProject(this.projectsManager.getProjects()[index]);
+            this.loadProject(this.projectsManager.getProjects()[index], index);
         });
         this.projectTitle.appendChild(projectSelection);
 
@@ -54,7 +55,18 @@ displayController.prototype.setup = function () {
         delImg.src = del;
         delImg.classList.add('item-img');
         delProjectButton.appendChild(delImg);
+        delProjectButton.addEventListener('click', () => {
+            if (this.projectsManager && this.currentIndex !== undefined) {
+                this.projectsManager.removeProjectAt(this.currentIndex);
+                this.loadProjectList(this.projectsManager.getProjects());
+                this.clearContent();
+
+                if (this.projectsManager.getProjects().length > 0) this.loadProject(this.projectsManager.getProjectAt(0));
+                else this.changeProjectName('<empty>');
+            }
+        });
         projectButtonsDiv.appendChild(delProjectButton);
+
 
         const addProjectButton = document.createElement('button');
         addProjectButton.id = 'add-project-button';
@@ -99,9 +111,10 @@ displayController.prototype.clearContent = function () {
     this.todoContent.innerHTML = "";
     this.postContent.innerHTML = "";
 }
-displayController.prototype.loadProject = function (project) {
+displayController.prototype.loadProject = function (project, index) {
     this.changeProjectName(project['name']);
-    this.currentDisplay = project;
+    if (index) this.currentIndex = index;
+    console.log(this.currentIndex);
     const data = project.getData();
 
     // Clear and populate content
