@@ -56,7 +56,7 @@ function newProject(name) {
     dc.loadProjectList(pm.getProjects());
 }
 
-const test = 1;
+const test = 0;
 
 if (test)
     testFunc();

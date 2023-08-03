@@ -115,31 +115,33 @@ todoItem.prototype.createItemDisplay = function (id) {
     editButton.appendChild(editImg);
     displayItem.appendChild(editButton);
     editButton.addEventListener('click', (e) => {
-        const editItem = todoItemForm('Edit item', 'Confirm', (newName, newDesc, newPrio, newdueDate, newComplete) => {
-            // Update values in the item (persist through reload)
-            this.item = [newName || this.item[0],
-            newDesc || this.item[1],
-            newPrio || this.item[2],
-            newdueDate || this.item[3],
-            newComplete || this.item[4],
-            this.item[5]];
+        if (!document.querySelector('.action-form')) {
+            const editItem = todoItemForm('Edit item', 'Confirm', (newName, newDesc, newPrio, newdueDate, newComplete) => {
+                // Update values in the item (persist through reload)
+                this.item = [newName || this.item[0],
+                newDesc || this.item[1],
+                newPrio || this.item[2],
+                newdueDate || this.item[3],
+                newComplete || this.item[4],
+                this.item[5]];
 
-            // Update values on the web page
-            name.textContent = newName;
-            description.textContent = newDesc;
+                // Update values on the web page
+                if (name) name.textContent = newName;
+                if (description) description.textContent = newDesc;
 
-            dueDate.title = format(this.getDueDate(), "M/d/yy, h:mm aaaaa'm'");
-            dueDate.textContent = calcTimeDisplay(this.getDueDate());
-            if (dueDate.textContent === 'Passed')
-                dueDate.setAttribute('color', 'red');
+                dueDate.title = format(this.getDueDate(), "M/d/yy, h:mm aaaaa'm'");
+                dueDate.textContent = calcTimeDisplay(this.getDueDate());
+                if (dueDate.textContent === 'Passed')
+                    dueDate.setAttribute('color', 'red');
 
-            checkBox.checked = this.isComplete();
+                checkBox.checked = this.isComplete();
 
-            displayItem.classList.remove('p-low', 'p-med', 'p-high');
-            displayItem.classList.add(calcPrio(this.item[2]));
+                displayItem.classList.remove('p-low', 'p-med', 'p-high');
+                displayItem.classList.add(calcPrio(this.item[2]));
 
-        }, this.item);
-        e.target.parentNode.parentNode.parentNode.appendChild(editItem);
+            }, this.item);
+            e.target.parentNode.parentNode.parentNode.appendChild(editItem);
+        }
     });
 
     // Delete Button, Hidden until hover
@@ -181,11 +183,13 @@ export function createAddDisplay(cb) {
     addButton.classList.add('add-button', 'todo-button', 'hide-opacity');
     addButton.textContent = '+';
     addButton.addEventListener('click', (e) => {
-        const addItemForm = todoItemForm('Add item', 'Add', (...data) => {
-            cb(data);
-        });
-        addItemForm.classList.add('add-form');
-        e.target.parentNode.parentNode.appendChild(addItemForm);
+        if (!document.querySelector('.action-form')) {
+            const addItemForm = todoItemForm('Add item', 'Add', (...data) => {
+                cb(data);
+            });
+            addItemForm.classList.add('add-form');
+            e.target.parentNode.parentNode.appendChild(addItemForm);
+        }
     });
     row.appendChild(addButton);
 
@@ -269,9 +273,15 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
     leftActionButton.textContent = buttonName;
     leftActionButton.addEventListener('click', (e) => {
         e.preventDefault();
-        const values = [name.value, description.value, priority.value, parseISO(dueDate.value + 'Z'), checkBox.checked];
-        formAction(...values);
-        e.target.parentNode.parentNode.remove();
+        if (name.value.length > 0 && description.value.length > 0) {
+            const values = [name.value, description.value, priority.value, parseISO(dueDate.value), checkBox.checked];
+            formAction(...values);
+            e.target.parentNode.parentNode.remove();
+        }
+        else {
+            const alertString = 'Empty required value(s): ' + (name.value.length === 0 ? '\n- Name' : '') + (description.value.length === 0 ? '\n- Description' : '');
+            alert(alertString);
+        }
     });
     actionButtons.appendChild(leftActionButton);
 

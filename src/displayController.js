@@ -47,7 +47,7 @@ displayController.prototype.setup = function () {
         editImg.classList.add('item-img');
         editProjectButton.appendChild(editImg);
         editProjectButton.addEventListener('click', (e) => {
-            if (this.projectsManager.getProjects().length > 0) {
+            if (this.projectsManager.getProjects().length > 0 && !document.querySelector('.action-form')) {
                 const addProjectForm = todoListForm('Edit List', 'Confirm', (name) => {
                     this.projectsManager.getProjectAt(this.currentIndex).setName(name);
                     this.reloadList();
@@ -86,18 +86,20 @@ displayController.prototype.setup = function () {
         addProjectButton.textContent = '+';
 
         addProjectButton.addEventListener('click', (e) => {
-            const addItemForm = todoListForm('Add item', 'Add', (name) => {
-                this.projectsManager.addProject(new todoList(name));
-                const index = this.projectsManager.getLength() - 1;
-                this.loadProject(this.projectsManager.getProjectAt(index), index);
-                // Reload selection list and select last one
-                this.reloadList();
-                this.changeProjectName(name);
-                projectSelection.selectedIndex = projectSelection.length - 1;
+            if (!document.querySelector('.action-form')) {
+                const addItemForm = todoListForm('Add item', 'Add', (name) => {
+                    this.projectsManager.addProject(new todoList(name));
+                    const index = this.projectsManager.getLength() - 1;
+                    this.loadProject(this.projectsManager.getProjectAt(index), index);
+                    // Reload selection list and select last one
+                    this.reloadList();
+                    this.changeProjectName(name);
+                    projectSelection.selectedIndex = projectSelection.length - 1;
 
-            });
-            addItemForm.classList.add('add-form');
-            e.target.parentNode.parentNode.parentNode.appendChild(addItemForm);
+                });
+                addItemForm.classList.add('add-form');
+                e.target.parentNode.parentNode.parentNode.appendChild(addItemForm);
+            }
         });
         projectButtonsDiv.appendChild(addProjectButton);
 

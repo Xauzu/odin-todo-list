@@ -50,10 +50,13 @@ export function todoListForm(title, buttonName, formAction, data, cb) {
     leftActionButton.textContent = buttonName;
     leftActionButton.addEventListener('click', (e) => {
         e.preventDefault();
-        const values = [name.value];
-        formAction(...values);
-        e.target.parentNode.parentNode.remove();
-        if (cb) cb();
+        if (name.value.length > 0) {
+            const values = [name.value];
+            formAction(...values);
+            e.target.parentNode.parentNode.remove();
+            if (cb) cb();
+        }
+        else alert('Empty name field');
     });
     actionButtons.appendChild(leftActionButton);
 
