@@ -160,6 +160,7 @@ displayController.prototype.loadProject = function (project, index) {
     }
     this.postContent.appendChild(createAddDisplay((...inputData) => {
         project.appendTodoItem(...inputData);
+        this.projectsManager.saveToLocalStorage();
         this.todoContent.appendChild(project.getLastItem().createItemDisplay(data.length - 1, () => {
             this.projectsManager.saveToLocalStorage();
         }));
