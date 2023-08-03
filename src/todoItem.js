@@ -98,25 +98,12 @@ todoItem.prototype.createItemDisplay = function (id) {
 
     // Due Date
     const dueDate = document.createElement('div');
-    if ('showPicker' in HTMLInputElement.prototype) {
-        // console.log(new Date().toISOString(), this.getDueDate(), "dateDiff: ", dateDiff);
+    dueDate.title = format(this.getDueDate(), "M/d/yy, h:mm aaaaa'm'");
+    dueDate.textContent = calcTimeDisplay(this.getDueDate());
+    if (dueDate.textContent === 'Passed')
+        dueDate.setAttribute('color', 'red');
 
-        dueDate.title = format(this.getDueDate(), "M/d/yy, h:mm aaaaa'm'");
-
-        dueDate.textContent = calcTimeDisplay(this.getDueDate());
-        if (dueDate.textContent === 'Passed')
-            dueDate.setAttribute('color', 'red');
-
-        displayItem.appendChild(dueDate);
-    }
-    else {
-        dueDate.setAttribute('type', 'datetime-local');
-        dueDate.value = this.getDueDate().toISOString().slice(0, 16);
-        dueDate.addEventListener('change', (e) => {
-            this.setDueDate(parseISO(dueDate.value + "Z"));
-        });
-        displayItem.appendChild(dueDate);
-    }
+    displayItem.appendChild(dueDate);
 
     // Edit Button, Hidden until hover
     const editButton = document.createElement('button');
