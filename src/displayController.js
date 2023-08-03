@@ -153,8 +153,11 @@ displayController.prototype.loadProject = function (project, index) {
 
     // Clear and populate content
     this.clearContent();
-    for (let i = 0; i < data.length; i++)
-        this.todoContent.appendChild(data[i].createItemDisplay(i));
+    for (let i = 0; i < data.length; i++) {
+        this.todoContent.appendChild(data[i].createItemDisplay(i, () => {
+            this.projectsManager.saveToLocalStorage();
+        }));
+    }
     this.postContent.appendChild(createAddDisplay((inputData) => {
         project.appendTodoItem(inputData);
         this.todoContent.appendChild(project.getLastItem().createItemDisplay(data.length - 1));

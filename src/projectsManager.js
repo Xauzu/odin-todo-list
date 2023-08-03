@@ -56,7 +56,8 @@ projectsManager.prototype.loadFromLocalStorage = function () {
                 const tdL = new todoList(data[i]['name']);
                 for (let j = 0; j < data[i]['data'].length; j++) {
                     const item = data[i]['data'][j]['item'];
-                    tdL.appendTodoItem(item[0], item[1], item[2], parseISO(item[3]), item[4]);
+                    if (item[5] !== 1)
+                        tdL.appendTodoItem(item[0], item[1], item[2], parseISO(item[3]), item[4], item[5]);
                 }
                 this.addProject(tdL);
             }

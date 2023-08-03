@@ -2,9 +2,9 @@ import edit from './edit.png';
 import del from './delete.png';
 import { compareAsc, parseISO, format } from 'date-fns';
 
-export default function todoItem(name, description, priority, dueDate, complete) {
+export default function todoItem(name, description, priority, dueDate, complete, del) {
     // String String int(0->2) Date boolean delete?
-    this.item = [name, description, priority, dueDate, complete, 0];
+    this.item = [name, description, priority, dueDate, complete, del || 0];
 };
 
 todoItem.prototype.getItem = function () { return this.item; };
@@ -64,7 +64,7 @@ function calcPrio(prio) {
 //  priority, 0 = gray, 1 = orange, 2 = red
 //
 //  * huh = hidden until hover
-todoItem.prototype.createItemDisplay = function (id) {
+todoItem.prototype.createItemDisplay = function (id, save) {
     // Parent Node
     const displayItem = document.createElement('div');
     displayItem.classList.add('todo-item');
@@ -117,6 +117,7 @@ todoItem.prototype.createItemDisplay = function (id) {
     editButton.addEventListener('click', (e) => {
         if (!document.querySelector('.action-form')) {
             const editItem = todoItemForm('Edit item', 'Confirm', (newName, newDesc, newPrio, newdueDate, newComplete) => {
+
                 // Update values in the item (persist through reload)
                 this.item = [newName || this.item[0],
                 newDesc || this.item[1],
@@ -139,6 +140,9 @@ todoItem.prototype.createItemDisplay = function (id) {
                 displayItem.classList.remove('p-low', 'p-med', 'p-high');
                 displayItem.classList.add(calcPrio(this.item[2]));
 
+                // Save to localStorage
+                save();
+
             }, this.item);
             e.target.parentNode.parentNode.parentNode.appendChild(editItem);
         }
@@ -156,6 +160,9 @@ todoItem.prototype.createItemDisplay = function (id) {
     deleteButton.addEventListener('click', (e) => {
         e.target.parentNode.parentNode.classList.add('hide');
         this.delete();
+
+        // Save to localStorage
+        save();
     });
 
     displayItem.addEventListener('mouseenter', () => {

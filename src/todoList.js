@@ -6,7 +6,7 @@ export default function todoList(name) {
 };
 
 todoList.prototype.getData = function () { this.clean(); return this.data; };
-todoList.prototype.getLastItem = function () { return this.data[this.data.length - 1]; };
+todoList.prototype.getLastItem = function () { this.clean(); return this.data[this.data.length - 1]; };
 todoList.prototype.getName = function () { return this.name; };
 todoList.prototype.appendItem = function (item) { this.data.push(item); };
 todoList.prototype.appendTodoItem = function (name, description, priority, dueDate, complete) { this.data.push(new todoItem(name, description, priority, dueDate, complete)); };
