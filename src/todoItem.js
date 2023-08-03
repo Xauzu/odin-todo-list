@@ -238,7 +238,9 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
 
     const dueDate = document.createElement('input');
     dueDate.setAttribute('type', 'datetime-local');
-    dueDate.value = new Date().toISOString().slice(0, 16);
+    let d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    dueDate.value = d.toISOString().slice(0, 16);
     main.appendChild(dueDate);
 
     const checkBoxDiv = document.createElement('div');
@@ -260,7 +262,11 @@ export function todoItemForm(title, buttonName, formAction, data, cb) {
         name.value = data[0];
         description.value = data[1];
         priority.value = data[2];
-        dueDate.value = data[3].toISOString().slice(0, 16);
+
+        let d = new Date(data[3]);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        dueDate.value = d.toISOString().slice(0, 16);
+
         checkBox.checked = data[4];
     }
 
